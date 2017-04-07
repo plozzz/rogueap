@@ -310,21 +310,21 @@ function check_sslstrip
     echo -ne "Check sslstrip $NUMLINES : "
     i=1
     while [ $i -le $NUMLINES ]; do
-	VAL1=$(awk -v k=$i 'FNR == k {print $1}' "$DEFS")
-	VAL2=$(awk -v k=$i 'FNR == k {print $2}' "$DEFS")
-	VAL3=$(awk -v k=$i 'FNR == k {print $3}' "$DEFS")
-	VAL4=$(awk -v k=$i 'FNR == k {print $4}' "$DEFS")
-	GREPSTR="$(grep -a $VAL2 "$SSLTRIP_LOG" | grep -a $VAL3 | grep -a $VAL4)"
-  echo "grep -a $VAL2 "$SSLTRIP_LOG" | grep -a $VAL3 | grep -a $VAL4"
-  echo "result : $GREPSTR"
-	if [ "$GREPSTR" ]; then
-	    echo -n "$VAL1" "- " >> $CHECK_OUTUP
-	    echo "$GREPSTR" | \
-		sed -e 's/.*'$VAL3'=/'$VAL3'=/' -e 's/&/ /' -e 's/&.*//' >> $CHECK_OUTUP
-	fi
-	
-	i=$[$i+1]
-	echo -ne "."
+    	VAL1=$(awk -v k=$i 'FNR == k {print $1}' "$DEFS")
+    	VAL2=$(awk -v k=$i 'FNR == k {print $2}' "$DEFS")
+    	VAL3=$(awk -v k=$i 'FNR == k {print $3}' "$DEFS")
+    	VAL4=$(awk -v k=$i 'FNR == k {print $4}' "$DEFS")
+    	GREPSTR="$(grep -a $VAL2 "$SSLTRIP_LOG" | grep -a $VAL3 | grep -a $VAL4)"
+        echo "grep -a $VAL2 "$SSLTRIP_LOG" | grep -a $VAL3 | grep -a $VAL4"
+        echo "result : $GREPSTR"
+    	if [ "$GREPSTR" ]; then
+    	    echo -n "$VAL1" "- " >> $CHECK_OUTUP
+    	    echo "$GREPSTR" | \
+    		sed -e 's/.*'$VAL3'=/'$VAL3'=/' -e 's/&/ /' -e 's/&.*//' >> $CHECK_OUTUP
+    	fi
+    	
+    	i=$[$i+1]
+    	echo -ne "."
     done
     display_err $?
 
